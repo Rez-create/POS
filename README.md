@@ -1,33 +1,29 @@
-RetailPOS — Point of Sale & Inventory Management System
+RetailPOS: Point of Sale and Inventory Management System
 
-A web-based Point of Sale (POS) and Inventory Management System built with ASP.NET Core MVC, C#, Entity Framework Core, and Microsoft SQL Server. RetailPOS is designed to help retail businesses manage products, monitor stock levels, process sales, and maintain organized sales records through a centralized application.
-
----
+A web-based Point of Sale (POS) and Inventory Management System developed using ASP.NET Core MVC, C#, Entity Framework Core, and Microsoft SQL Server. RetailPOS is designed to help retail businesses manage products, track stock levels, process sales, and maintain transaction records through a centralized application.
 
 1. Overview
 
-RetailPOS provides a centralized platform for managing day-to-day retail operations. It combines sales processing and inventory management to help businesses maintain accurate product records, track stock movements, and review sales activity.
+RetailPOS provides a centralized platform for managing daily retail operations. It combines sales processing and inventory management to help businesses maintain accurate product records, monitor stock levels, and review sales activity.
 
-The system is intended for small and medium-sized retail businesses that require a structured way to manage their products, inventory, and transactions.
+The system is intended for small and medium-sized retail businesses that need an organized way to manage their products, inventory, and transactions.
 
 Objectives
 
 - Simplify point-of-sale operations.
-- Maintain organized product and category records.
+- Manage products and categories in one place.
 - Track inventory levels and stock movements.
-- Record sales transactions and their individual items.
-- Provide a centralized view of sales and inventory information.
-- Support controlled access to application functionality.
+- Record sales transactions and purchased items.
+- Provide access to sales and inventory information.
+- Control access to application features based on user permissions.
 
 Intended Users
 
 - Administrators: Manage products, categories, users, and system settings.
-- Cashiers: Process sales and review permitted transaction records.
-- Store managers: Monitor inventory and review sales performance.
+- Cashiers: Process sales and access permitted transaction records.
+- Store Managers: Monitor inventory and review sales performance.
 
-Actual user roles and permissions depend on the application's implementation.
-
----
+The available roles and permissions depend on the application's implementation.
 
 2. Features
 
@@ -35,7 +31,7 @@ Authentication and Access Control
 
 - User login and logout.
 - User account management.
-- Role-based authorization, where configured.
+- Role-based access control, where configured.
 - Restricted access to administrative functions.
 
 Product and Category Management
@@ -43,7 +39,7 @@ Product and Category Management
 - Create, view, update, and delete product records.
 - Organize products into categories.
 - Store product names, descriptions, prices, and stock quantities.
-- Search and filter products.
+- Search and filter product records.
 
 Inventory Management
 
@@ -69,124 +65,113 @@ Sales Management
 
 Dashboard and Reporting
 
-- Display key sales and inventory indicators.
-- Summarize sales activity over a selected period.
-- Highlight low-stock products.
-- Present relevant business information in a centralized dashboard.
+- Display sales and inventory summaries.
+- Review sales activity over a selected period.
+- Identify products with low stock levels.
+- Present relevant business information through a centralized dashboard.
 
-Note: This list describes the intended capabilities of the system. Retain only the features that are implemented in your current version.
-
----
+Only features implemented in the current version should be presented as completed functionality.
 
 3. Technology Stack
 
 Technology| Purpose
 C#| Main application programming language
-ASP.NET Core MVC| Web application framework and request handling
+ASP.NET Core MVC| Web application framework
 Razor Views| Server-rendered user interface
 HTML5| Page structure
 CSS3| Styling and layout
 JavaScript| Client-side interactions
 Bootstrap 5| Responsive interface components, if used
-Entity Framework Core| Object-relational mapping and database access
+Entity Framework Core| Database access and object-relational mapping
 Microsoft SQL Server| Relational database management
 ASP.NET Core Identity| Authentication and user management, if configured
 Git and GitHub| Source control and collaboration
 Chart.js| Dashboard charts, if used
 
----
-
 4. System Architecture
 
-RetailPOS follows a layered MVC architecture that separates the user interface, request handling, application logic, data access, and database storage.
+RetailPOS follows a layered MVC architecture that separates the user interface, request handling, application logic, database access, and data storage.
 
 Architecture Diagram
 
-flowchart TB
-    USER["Administrator / Cashier / Manager"]
+flowchart TD
+    U["Users: Admin, Cashier, Manager"]
 
-    subgraph WEB["Presentation Layer"]
-        VIEW["Razor Views"]
-        BROWSER["HTML · CSS · JavaScript"]
+    subgraph PRESENTATION["Presentation Layer"]
+        V["Razor Views"]
+        UI["HTML, CSS, JavaScript"]
     end
 
-    subgraph APP["Application Layer"]
-        ROUTING["ASP.NET Core Routing"]
-        CTRL["MVC Controllers"]
-        SERVICE["Business Services"]
-        VALIDATION["Validation and Authorization"]
+    subgraph APPLICATION["Application Layer"]
+        R["ASP.NET Core Routing"]
+        C["MVC Controllers"]
+        AUTH["Authentication and Authorization"]
+        S["Business Logic and Validation"]
     end
 
     subgraph DATA["Data Access Layer"]
+        CTX["ApplicationDbContext"]
         EF["Entity Framework Core"]
-        CONTEXT["ApplicationDbContext"]
     end
 
-    subgraph STORAGE["Persistence Layer"]
-        DB[("Microsoft SQL Server")]
-        IDENTITY["ASP.NET Core Identity Tables"]
-    end
+    DB[("Microsoft SQL Server")]
+    ID["ASP.NET Core Identity"]
 
-    USER --> VIEW
-    VIEW <--> BROWSER
-    BROWSER --> ROUTING
-    ROUTING --> CTRL
-    CTRL --> VALIDATION
-    VALIDATION --> SERVICE
-    SERVICE --> CONTEXT
-    CONTEXT --> EF
+    U --> V
+    V <--> UI
+    UI --> R
+    R --> C
+    C --> AUTH
+    AUTH --> S
+    S --> CTX
+    CTX --> EF
     EF <--> DB
-    DB --- IDENTITY
-    CTRL --> VIEW
+    DB --- ID
 
 Architecture Components
 
 Component| Responsibility
-Presentation layer| Displays pages, forms, tables, and user feedback
-MVC controllers| Receive HTTP requests and coordinate application operations
-Business services| Apply business rules, where the application uses a service layer
-Validation and authorization| Validate inputs and enforce access permissions
+Presentation Layer| Displays pages, forms, tables, and feedback
+MVC Controllers| Receive requests and coordinate application operations
+Authentication and Authorization| Verify users and enforce access permissions
+Business Logic| Applies sales, inventory, and validation rules
+ApplicationDbContext| Defines database entities and coordinates database operations
 Entity Framework Core| Maps application entities to database records
-Application database context| Defines database sets and coordinates database operations
-SQL Server| Stores products, categories, sales, and inventory records
-ASP.NET Core Identity| Stores and manages user accounts, roles, and authentication data, when configured
+SQL Server| Stores product, category, sales, and inventory information
+ASP.NET Core Identity| Manages user accounts and roles when configured
 
-Typical request flow: A user submits an action through the interface. ASP.NET Core routes the request to a controller, which validates the operation and invokes the required application logic. Entity Framework Core handles database operations, and the controller returns an appropriate view or response.
-
----
+A typical request begins when a user performs an action through the interface. ASP.NET Core routes the request to the appropriate controller. The application validates the operation, executes the required business logic, accesses the database through Entity Framework Core, and returns the appropriate view or response.
 
 5. Application Pages
 
-The following table provides a suggested page structure. Update the page names and routes to reflect the actual controllers and views in your project.
+The following table provides a suggested page structure. Update the routes to match the controllers and views in the actual project.
 
 Page| Example Route| Purpose
 Login| "/Account/Login"| Authenticate users
 Dashboard| "/Dashboard/Index"| Display sales and inventory summaries
 Products| "/Products/Index"| View and manage products
-Create Product| "/Products/Create"| Register a new product
+Create Product| "/Products/Create"| Add a new product
 Categories| "/Categories/Index"| Manage product categories
 Point of Sale| "/Sales/Create"| Create and process sales
 Sales History| "/Sales/Index"| Review recorded transactions
-Sale Details| "/Sales/Details/{id}"| Display individual sale information
+Sale Details| "/Sales/Details/{id}"| View individual sale information
 Inventory| "/Inventory/Index"| View stock quantities and movements
 User Management| "/Users/Index"| Manage user accounts, if implemented
-
----
 
 6. Database Design and ERD
 
 RetailPOS uses a relational database to organize product information, inventory records, sales transactions, and user accounts.
 
-The following entities represent a suggested database design. Actual table names, properties, and relationships should match the Entity Framework Core models and migrations in the project.
+The following ERD represents a proposed database design. The entity names, fields, and relationships should be updated to match the actual Entity Framework Core models and database migrations.
 
 Entity Relationship Diagram
 
 erDiagram
-    CATEGORIES ||--o{ PRODUCTS : categorizes
-    PRODUCTS ||--o{ SALE_ITEMS : appears_in
+    CATEGORIES ||--o{ PRODUCTS : contains
+    PRODUCTS ||--o{ SALE_ITEMS : included_in
     SALES ||--|{ SALE_ITEMS : contains
     ASP_NET_USERS ||--o{ SALES : processes
-    PRODUCTS ||--o{ STOCK_MOVEMENTS : records
+    PRODUCTS ||--o{ STOCK_MOVEMENTS : has
     ASP_NET_USERS ||--o{ STOCK_MOVEMENTS : records
 
     CATEGORIES {
@@ -240,7 +225,7 @@ Database Tables
 
 Categories
 
-Stores product category information.
+Stores information about product categories.
 
 Field| Suggested Type| Description
 "CategoryId"| "int"| Primary key
@@ -249,7 +234,7 @@ Field| Suggested Type| Description
 
 Products
 
-Stores product details and current inventory quantities.
+Stores product details and current stock quantities.
 
 Field| Suggested Type| Description
 "ProductId"| "int"| Primary key
@@ -257,11 +242,11 @@ Field| Suggested Type| Description
 "Name"| "nvarchar"| Product name
 "SKU"| "nvarchar"| Product stock-keeping identifier
 "UnitPrice"| "decimal"| Selling price per unit
-"QuantityInStock"| "int"| Current stock quantity
+"QuantityInStock"| "int"| Current available quantity
 
 Sales
 
-Stores the header information for each sale.
+Stores the main information for each sale.
 
 Field| Suggested Type| Description
 "SaleId"| "int"| Primary key
@@ -272,7 +257,7 @@ Field| Suggested Type| Description
 
 SaleItems
 
-Stores individual products included in a sale.
+Stores the individual products included in a sale.
 
 Field| Suggested Type| Description
 "SaleItemId"| "int"| Primary key
@@ -284,7 +269,7 @@ Field| Suggested Type| Description
 
 StockMovements
 
-Stores inventory changes, if the application implements stock movement tracking.
+Stores inventory changes when stock movement tracking is implemented.
 
 Field| Suggested Type| Description
 "StockMovementId"| "int"| Primary key
@@ -294,43 +279,41 @@ Field| Suggested Type| Description
 "Quantity"| "int"| Quantity affected
 "MovementDate"| "datetime"| Date and time of the movement
 
-ASP.NET Core Identity Tables
+ASP.NET Core Identity
 
-When ASP.NET Core Identity is used, it manages user and role data through its Identity tables, which commonly include "AspNetUsers", "AspNetRoles", and related tables.
+When ASP.NET Core Identity is configured, it manages authentication and user data through tables such as "AspNetUsers", "AspNetRoles", and related Identity tables.
 
 Database Relationships
 
 - One category can contain multiple products.
 - A product can appear in multiple sale items.
 - A sale contains one or more sale items.
-- A user can process multiple sales when sales are associated with user accounts.
+- A user can process multiple sales when transactions are associated with user accounts.
 - A product can have multiple stock movement records.
-- A user can record multiple stock movements when inventory activity is associated with user accounts.
+- A user can record multiple stock movements when inventory activities are linked to user accounts.
 
-Important Data Integrity Rules
+Data Integrity Rules
 
-- Sale items must reference valid sales and products.
-- Product prices and quantities should be validated before a transaction is committed.
-- Completing a sale and deducting inventory should occur within a database transaction.
-- The sale should not be recorded as completed if its required database operations fail.
-- Stock quantities should not become negative unless the business explicitly permits negative inventory.
-- Prices used in historical sales should be preserved in sale item records so later product price changes do not alter past transactions.
-
----
+- Every sale item must reference a valid sale and product.
+- Product prices and quantities must be validated before a transaction is committed.
+- Sale creation and stock deduction should occur within a database transaction.
+- Failed database operations should not leave a partially completed sale.
+- Stock quantities should not become negative unless the business explicitly permits it.
+- Historical sale prices should be preserved so that changes to current product prices do not affect previous transactions.
 
 7. Installation and Setup
 
 Prerequisites
 
-Install the following tools before running the project:
+Install the following tools before running the application:
 
-- .NET SDK version compatible with the project.
-- Microsoft SQL Server or a compatible configured SQL Server instance.
+- .NET SDK compatible with the project.
+- Microsoft SQL Server.
 - SQL Server Management Studio or another database management tool, if needed.
 - Git.
-- An IDE such as Visual Studio or Visual Studio Code with the appropriate C# tooling.
+- Visual Studio or Visual Studio Code with the appropriate C# tooling.
 
-Check the installed .NET SDK:
+Verify your .NET installation:
 
 dotnet --info
 
@@ -353,37 +336,35 @@ Create a SQL Server database for RetailPOS and configure its connection string a
 
 Step 4: Apply Database Migrations
 
-If the project uses Entity Framework Core migrations, install the EF Core CLI tool if required:
+If the project uses Entity Framework Core migrations, install the EF Core command-line tool if necessary.
 
 dotnet tool install --global dotnet-ef
 
-If it is already installed, update it when appropriate:
+If the tool is already installed, update it when required.
 
 dotnet tool update --global dotnet-ef
 
-From the directory containing the relevant project file, run:
+Run the following command from the directory containing the relevant project file:
 
 dotnet ef database update
 
-If the solution separates the startup project from the data access project, specify the relevant project paths:
+If the solution separates the data access project from the startup project, specify the correct paths:
 
 dotnet ef database update \
   --project path/to/DataProject.csproj \
   --startup-project path/to/WebProject.csproj
 
-Use the actual project paths in your repository. If migrations do not exist yet, create them using the appropriate "dotnet ef migrations add" command before applying them.
+Replace the example paths with the actual project locations. If migrations have not been created, create an initial migration before updating the database.
 
 Step 5: Run the Application
 
 dotnet run
 
-Open the local HTTP or HTTPS address printed in the terminal. The actual address depends on the project's launch settings.
+Open the local HTTP or HTTPS address displayed in the terminal. The address depends on the project's launch settings.
 
 Step 6: Sign In
 
-Use an account created through the application's registration, administrative setup, or seed process. Do not assume a default administrator account exists unless one has been deliberately configured.
-
----
+Use an account created through the application's registration, administrative setup, or database seeding process. A default administrator account should only be used if one has been deliberately configured.
 
 8. Configuration
 
@@ -391,7 +372,7 @@ Database Connection String
 
 Configure the SQL Server connection string through .NET configuration or User Secrets during development.
 
-Example "appsettings.json" structure:
+The "appsettings.json" file can contain the following structure:
 
 {
   "ConnectionStrings": {
@@ -399,7 +380,7 @@ Example "appsettings.json" structure:
   }
 }
 
-Keep the connection string out of source control when it contains credentials.
+Keep connection strings containing credentials out of source control.
 
 For local development, initialize User Secrets from the web project directory:
 
@@ -409,11 +390,11 @@ Set the connection string:
 
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=YOUR_SERVER;Database=RetailPOS;Trusted_Connection=True;TrustServerCertificate=True;"
 
-Adjust the connection string for your SQL Server setup. For SQL Server authentication, use the appropriate authentication parameters and store credentials securely.
+Adjust the connection string to match your SQL Server configuration. For SQL Server authentication, use the appropriate authentication parameters and store credentials securely.
 
 Environment Settings
 
-ASP.NET Core supports environment-specific configuration files, such as:
+ASP.NET Core supports environment-specific configuration files, including:
 
 - "appsettings.json"
 - "appsettings.Development.json"
@@ -423,34 +404,31 @@ Avoid committing passwords, API keys, production connection strings, or other se
 
 Identity and User Roles
 
-If the application uses ASP.NET Core Identity, configure its services, database context, and authorization policies according to the project's setup.
+If the application uses ASP.NET Core Identity, configure its services, database context, and authorization policies according to the project implementation.
 
-Possible roles include:
+Suggested roles include:
 
 Role| Example Permissions
 Administrator| Manage users, products, categories, and system settings
-Cashier| Process sales and access permitted sales records
+Cashier| Process sales and access permitted transaction records
 Store Manager| Review inventory and sales information
 
-These are suggested roles. Configure and enforce permissions in the application rather than relying on interface visibility alone.
+These roles are examples. Permissions must be configured and enforced by the application.
 
 Database Initialization
 
-If the project uses a database seeding process, ensure that:
+If the application uses database seeding, ensure that:
 
-- Required roles are created before assigning users to them.
-- Any initial administrator account is configured securely.
-- Initial product or category data is intentional.
-- Seeding operations are safe to rerun or handle existing records correctly.
-
----
+- Required roles are created before users are assigned to them.
+- Initial administrator accounts are configured securely.
+- Initial product and category records are intentional.
+- Seeding operations handle existing records correctly when run more than once.
 
 9. Project Structure
 
-The following is a suggested ASP.NET Core MVC structure. Adjust it to reflect the actual folders and files in the repository.
+The following is a suggested ASP.NET Core MVC project structure. Update it to match the actual folders and files in your repository.
 
 RetailPOS/
-│
 ├── Controllers/
 │   ├── HomeController.cs
 │   ├── DashboardController.cs
@@ -503,54 +481,52 @@ RetailPOS/
 ├── RetailPOS.csproj
 └── README.md
 
-Key Directories and Files
+Main Directories and Files
 
 Directory or File| Responsibility
 "Controllers/"| Handles HTTP requests and coordinates application actions
 "Models/"| Defines domain entities and data models
 "Data/"| Contains the database context and Entity Framework Core migrations
-"Services/"| Holds reusable business logic, if the application uses a service layer
-"ViewModels/"| Defines data structures prepared for individual views
+"Services/"| Contains reusable business logic, if a service layer is used
+"ViewModels/"| Defines data structures prepared for application views
 "Views/"| Contains Razor templates for application pages
 "wwwroot/"| Stores static assets such as CSS, JavaScript, and images
 "Program.cs"| Configures application services, middleware, and startup
 "appsettings.json"| Stores non-secret application configuration
-"RetailPOS.csproj"| Defines the project, target framework, and package references
-
----
+"RetailPOS.csproj"| Defines the project framework and package references
 
 10. Security Considerations
 
-Security is important because RetailPOS handles user accounts, sales records, and inventory information.
+Security is important because RetailPOS handles user accounts, sales transactions, and inventory records.
 
 Authentication and Authorization
 
-- Use a supported authentication mechanism, such as ASP.NET Core Identity.
+- Use a supported authentication mechanism such as ASP.NET Core Identity.
 - Require authentication for protected application areas.
 - Apply role-based or policy-based authorization to sensitive operations.
 - Verify permissions on the server for every protected request.
-- Avoid exposing administrative functions to unauthorized users.
+- Restrict administrative functions to authorized users.
 
 Input Validation
 
 - Validate user input on the server.
-- Apply appropriate model validation attributes and business rules.
+- Apply model validation and business rules.
 - Validate product prices, quantities, identifiers, and transaction data.
-- Use Razor's normal output encoding and avoid rendering untrusted content as raw HTML.
+- Use Razor's default output encoding and avoid rendering untrusted content as raw HTML.
 
 Database Security
 
-- Use Entity Framework Core or parameterized database operations instead of constructing SQL queries by concatenating untrusted input.
-- Apply least-privilege permissions to the database account used by the application.
+- Use Entity Framework Core or parameterized database operations instead of concatenating untrusted input into SQL queries.
+- Apply least-privilege permissions to the application's database account.
 - Protect connection strings and credentials.
 - Back up the database and periodically verify that backups can be restored.
 
 Sales and Inventory Integrity
 
 - Perform sale creation, sale item insertion, and stock deductions within a consistent database transaction.
-- Validate stock availability before completing a sale.
-- Prevent duplicate processing of a sale when retries or repeated submissions are possible.
-- Keep reliable transaction and stock movement records where required.
+- Check stock availability before completing a sale.
+- Prevent duplicate transaction processing when requests are repeated.
+- Maintain transaction and stock movement records where required.
 
 Web Application Security
 
@@ -558,29 +534,20 @@ Web Application Security
 - Preserve anti-forgery protection for applicable state-changing MVC form submissions.
 - Keep the .NET runtime and NuGet dependencies updated.
 - Configure cookies and session settings securely.
-- Avoid displaying detailed exception messages or sensitive internal information to end users in production.
+- Avoid exposing detailed exception messages to users in production.
 - Restrict access to logs and avoid recording passwords, tokens, or other secrets.
 
 Deployment Security
 
-- Store production secrets in environment variables or an appropriate secret-management service.
-- Use a production-specific configuration.
+- Store production secrets in environment variables or a suitable secret-management service.
+- Use production-specific configuration.
 - Disable development diagnostics in production.
-- Apply database access restrictions and keep server software updated.
+- Restrict database access and keep server software updated.
 
----
+11. Project Summary
 
-11. Project Structure and Implementation Notes
+RetailPOS provides a foundation for managing retail sales and inventory through an ASP.NET Core MVC application. Its architecture separates the presentation layer, request handling, business logic, and database persistence to support maintainability and future development.
 
-RetailPOS is intended to provide a maintainable foundation for retail sales and inventory operations. Its architecture separates presentation, request handling, business rules, and database persistence so that individual parts can be improved without unnecessarily coupling the entire application.
+Before publishing this README, verify that the documented .NET version, controllers, models, routes, database relationships, and installation commands match the actual project.
 
-Before publishing this README, verify that:
-
-- The project name and repository URL are correct.
-- The documented .NET version matches the project file.
-- The listed controllers, models, views, and services exist in the repository.
-- The database diagram matches the actual entity models and foreign keys.
-- The installation and migration commands work for the current solution structure.
-- Any optional features described in this document are either implemented or clearly identified as planned.
-
-RetailPOS — Simplifying sales and inventory management through a centralized digital solution.
+RetailPOS: Simplifying sales and inventory management through a centralized digital solution.
