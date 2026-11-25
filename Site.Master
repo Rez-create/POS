@@ -1,0 +1,39 @@
+﻿
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="POSInventorySystem.SiteMaster" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>POS Inventory System</title>
+    <link href="Site.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <nav class="navbar">
+            <h2>POS Inventory</h2>
+
+            <div class="nav-links">
+                <a href="Default.aspx">Dashboard</a>
+                <a href="Products.aspx">Products</a>
+                <a href="Categories.aspx">Categories</a>
+                <a href="Inventory.aspx">Inventory</a>
+                <a href="POSCheckout.aspx">POS Checkout</a>
+                <a href="Sales.aspx">Sales</a>
+                <a href="Users.aspx">Users</a>
+                <a href="Logout.aspx">Logout</a>
+            </div>
+        </nav>
+
+        <div class="container">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+
+        <footer>
+            <p>© 2026 POS Inventory Management System</p>
+        </footer>
+
+    </form>
+</body>
+</html>
